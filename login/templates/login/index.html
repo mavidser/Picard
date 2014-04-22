@@ -1,0 +1,51 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+
+{% if latest_poll_list %}
+	<ul>
+		<!-- {% for poll in latest_poll_list %} -->
+		<li><a href="/pollss/{{ latest_poll_list }}/">{{ latest_poll_list }}</a></li>
+		<!-- {% endfor %} -->
+	</ul>
+{% else %}
+	<p>No polls are available.</p>
+{% endif %}
+<head>
+	{% load dajaxice_templatetags %}
+
+	<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
+	<script type="text/javascript" src="/static/dajax/jquery.dajax.core.js"></script>
+
+
+	<script type="text/javascript">
+
+	function calculate(){
+		Dajaxice.loign.multiply(Dajax.process,{'a':$('#a').val(),'b':$('#b').val()})
+	}
+	</script>
+
+	<script type="text/javascript">
+	function authenticate(){
+
+		x=document.getElementById("a").value;
+		y=document.getElementById("b").value;
+
+
+		alert(x);
+	}
+	</script>
+
+		{% dajaxice_js_import %}
+
+</head>
+<script type="text/javascript">
+Dajaxice.login.say_hello(Dajax.process);
+</script>
+<!-- <form>
+	<input type="text" value="5" id="a"> x
+	<input type="text" value="6" id="b"> =
+	<input type="text" value="" id="result">
+	<input type="button" value="Multiply!" onclick="authenticate();">
+</form>
+ -->

@@ -1,0 +1,133 @@
+{% load myfilters %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title> - Picard</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/static/css/normalize.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script type="text/javascript" src="/static/js/jquery.js" ></script>
+  <script type="text/javascript" src="/static/js/script.js"></script>
+  <style type="text/css">
+  #login {
+    display: block;
+    text-align: center;
+    /*margin: 0 auto;*/
+    margin-top: 100px;
+  }
+  #login input {
+    /*border: 0px;*/
+    height: 50px;
+    margin: 0 auto;
+    border-style: solid;
+    border-width: 0;
+    display: block;
+  }
+
+  #login input[type="submit"] {
+    width: 260px;
+    margin-top: 15px;
+    border-radius: 5px;
+    background-color: #BBB
+  }
+  input#id_username {
+    width: 250px;
+    padding-left: 10px;
+    border-radius: 5px 5px 0 0;
+    border-width: 1px;
+    border-color: #BBB;
+  }
+  input#id_password {
+    width: 250px;
+    padding-left: 10px;
+    border-width: 1px;
+    border-radius: 0 0 5px 5px;
+    border-color: #BBB;
+    border-top: 0;
+  }
+  ul.errorlist {
+    margin: 0 auto;
+    text-align: center;
+  }
+  </style>
+<!--[if lt IE 7]>
+<link rel="stylesheet" href="css/ie6.css" type="text/css" media="screen">
+<script type="text/javascript" src="js/ie_png.js"></script>
+<script type="text/javascript">ie_png.fix('.png, footer, header nav ul li a, .nav-bg, .list li img');</script>
+<![endif]-->
+<!--[if lt IE 9]><script type="text/javascript" src="js/html5.js"></script><![endif]-->
+</head>
+<body id="index">
+  <header>
+    <div class="wrap">
+      <div class="leftnav">
+        <ul>
+          <li><a href="/" class="m1">Picard</a></li>
+        </ul>
+      </div>
+      <nav>
+        <ul>
+          <li>
+          </li>
+          <!-- <li><a href="#" class="m3">Me</a></li> -->
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div id="login">
+      <form action="/login/" method="post">{% csrf_token %}
+        {{form}}
+        <input type="submit" value="Login" />
+      </form>
+      <br>
+      <p>Wrong username and Password</p>
+      <br>
+      <a href="/signup">Click here to Sign up</a>
+    </div>
+    <aside>
+        <h3></h3><!--
+        <ul class="details">
+          <li><span><a href="#">Programs</a></span></li>
+          <li><span><a href="#">Student Info</a></span></li>
+          <li><span><a href="#">Teachers</a></span></li>
+          <li><span><a href="#">Descriptions</a></span></li>
+          <li><span><a href="#">Administrators</a></span></li>
+          <li><span><a href="#">Basic Information</a></span></li>
+          <li><span><a href="#">Vacancies</a></span></li>
+          <li class="last"><span><a href="#">Calendar</a></span></li>
+        </ul>
+      -->
+
+
+      <ul class="desc">
+        <li>
+          <h3></h3>
+          <p><a href="#"></a></p>
+        </li>
+
+      </ul>
+    </aside>
+
+    <div class="content">
+
+
+    </div>
+  </div>
+</body>
+<script>
+$('.inactive').on('mouseover', function() {
+  $(this).removeClass('inactive');
+//alert("");
+});
+</script>
+<script>
+$('.inactive').on('mouseout', function() {
+  var q = $( "#query" ).val();
+  if(q=='')
+    $(this).addClass('inactive');
+});
+</script>
+</html>

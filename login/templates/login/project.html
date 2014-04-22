@@ -1,0 +1,145 @@
+{% load myfilters %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>{{Project.name}} - Picard</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="/static/css/normalize.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script type="text/javascript" src="/static/js/jquery.js" ></script>
+  <script type="text/javascript" src="/static/js/script.js"></script>
+<!--[if lt IE 7]>
+<link rel="stylesheet" href="css/ie6.css" type="text/css" media="screen">
+<script type="text/javascript" src="js/ie_png.js"></script>
+<script type="text/javascript">ie_png.fix('.png, footer, header nav ul li a, .nav-bg, .list li img');</script>
+<![endif]-->
+<!--[if lt IE 9]><script type="text/javascript" src="js/html5.js"></script><![endif]-->
+</head>
+<body id="index">
+	<header>
+		<div class="wrap">
+			<div class="leftnav">
+				<ul>
+					<li><a href="/" class="m1">Picard</a></li>
+				</ul>
+			</div>
+			<nav>
+				<ul>
+					<li>
+						<div class="Search inactive">
+							<form action="/search/" method="post">{% csrf_token %}
+                <!-- <input type="text" placeholder="Search" id="query"> -->
+                {{form}}
+                <input type="submit" value="" />
+              </form>
+						</div>
+					</li>
+          {% if user.is_authenticated %}
+          <li><a href="/user/{{user.username}}" class="m3">{{user.first_name}}</a></li>
+          <li><a href="/logout" class="m3">Logout</a></li>
+          {% else %}
+          <li><a href="/" class="m3">Login</a></li>
+          {% endif %}        </ul>
+			</nav>
+		</div>
+	</header>
+
+	<div class="wrap">
+		<aside>
+        <h3></h3><!--
+        <ul class="details">
+          <li><span><a href="#">Programs</a></span></li>
+          <li><span><a href="#">Student Info</a></span></li>
+          <li><span><a href="#">Teachers</a></span></li>
+          <li><span><a href="#">Descriptions</a></span></li>
+          <li><span><a href="#">Administrators</a></span></li>
+          <li><span><a href="#">Basic Information</a></span></li>
+          <li><span><a href="#">Vacancies</a></span></li>
+          <li class="last"><span><a href="#">Calendar</a></span></li>
+        </ul>
+      -->
+      <ul class="desc">
+        {% if Project.partners != '||' %}
+
+       <li>
+        <h3>Partners</h3>
+         {% for i in Project.partners|split:'|' %}
+          <p><a href="/user/{{ i }}">{{ i|getName }}</a></p>
+          <p></p>
+        {% endfor %}
+      </li>
+        {% endif %}
+
+      <li>
+        <h3>Category</h3>
+        <p><a href="#">{{Project.category}}</a></p>
+      </li>
+
+      <li>
+        <h3>Tags</h3>
+        {% for i in Project.tags|split:',' %}
+          <p><a href="#">{{i}}</a></p>
+        {% endfor %}
+      </li>
+
+      <li>
+        <h3>Status</h3>
+        <h4>Development Status</h4>
+        <strong>{{Project.partdone}}</strong>
+        <h4>Planned changes</h4>
+        {% for i in Project.partplanned|split:',' %}
+        <strong>{{i}}</strong>
+        {% endfor %}
+      </li>
+
+      <li>
+        <h3>Contribution</h3>
+        {% if Project.partreq %}
+        <h4>Open</h4>
+        {% for i in Project.partreq|split:',' %}
+        <strong>{{i}}</strong>
+        {% endfor %}
+        {% else %}
+        <h4>Closed</h4>
+        {% endif %}
+      </li>
+
+    </ul>
+  </aside>
+
+  <div class="content">
+  <h1>{{ Project.name }}</h1>
+  <h3><span>by <a href="/user/{{Project.user.userid}}">{{Project.user}}</a></span></h3>
+  <!-- <br><br> -->
+  {% if Project.photo %}
+  <img src="/media/{{ Project.photo }}"/>
+  {% endif %}
+  <p>
+    {{Project.desc}}
+  </p>
+  <!-- <br> -->
+  {% if Project.link %}
+  <strong>Project Website: <a href="{{ Project.link }}">{{ Project.link }}</a></strong>
+  {% endif %}
+  {% if Project.opensource %}
+  <strong>Source Code: <a href="{{ Project.opensource }}">{{ Project.opensource }}</a></strong>
+  {% endif %}
+  <strong>Contact Developer: <a href="emailto:{{ Project.user.email }}">{{ Project.user.email }}</a></strong>
+</div>
+</div>
+</body>
+<script>
+$('.inactive').on('mouseover', function() {
+	$(this).removeClass('inactive');
+    //alert("");
+  });
+</script>
+<script>
+$('.inactive').on('mouseout', function() {
+	var q = $( "#query" ).val();
+	if(q=='')
+		$(this).addClass('inactive');
+});
+</script>
+</html>

@@ -1,0 +1,103 @@
+{% load myfilters %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{User.name}} - Picard</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/static/css/normalize.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script type="text/javascript" src="/static/js/jquery.js" ></script>
+  <script type="text/javascript" src="/static/js/script.js"></script>
+<!--[if lt IE 7]>
+<link rel="stylesheet" href="css/ie6.css" type="text/css" media="screen">
+<script type="text/javascript" src="js/ie_png.js"></script>
+<script type="text/javascript">ie_png.fix('.png, footer, header nav ul li a, .nav-bg, .list li img');</script>
+<![endif]-->
+<!--[if lt IE 9]><script type="text/javascript" src="js/html5.js"></script><![endif]-->
+</head>
+<body id="index">
+  <header>
+    <div class="wrap">
+      <div class="leftnav">
+        <ul>
+          <li><a href="/" class="m1">Picard</a></li>
+        </ul>
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <div class="Search inactive">
+              <form action="/search/" method="post">{% csrf_token %}
+                <!-- <input type="text" placeholder="Search" id="query"> -->
+                {{form}}
+                <input type="submit" value="" />
+              </form>
+            </div>
+          </li>
+          {% if user.is_authenticated %}
+          <li><a href="/user/{{user.username}}" class="m3">{{user.first_name}}</a></li>
+          <li><a href="/logout" class="m3">Logout</a></li>
+          {% else %}
+          <li><a href="/" class="m3">Login</a></li>
+          {% endif %}        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <aside>
+        <h3></h3><!--
+        <ul class="details">
+          <li><span><a href="#">Programs</a></span></li>
+          <li><span><a href="#">Student Info</a></span></li>
+          <li><span><a href="#">Teachers</a></span></li>
+          <li><span><a href="#">Descriptions</a></span></li>
+          <li><span><a href="#">Administrators</a></span></li>
+          <li><span><a href="#">Basic Information</a></span></li>
+          <li><span><a href="#">Vacancies</a></span></li>
+          <li class="last"><span><a href="#">Calendar</a></span></li>
+        </ul>
+      -->
+      <ul class="desc">
+        <li>
+          <h3></h3>
+          <p><a href="#"></a></p>
+        </li>
+
+      </ul>
+    </aside>
+
+    <div class="content">
+      <h1>{{college.name}}</h1>
+      <h3><span>{{college.location}}</span></h3>
+      <!-- <br><br> -->
+      <!-- <br> -->
+      <strong>No. of Projects: <a href="#">{{college.noofprojects}}</a></strong>
+      <h2><span>Users:</span></h2>
+			{% for user in users%}
+				<strong><a href="/user/{{user.userid}}">{{user|getName}}</a></strong>
+			{% endfor %}
+
+      <h2><span>Projects:</span></h2>
+      {% for user in projects%}
+        <strong><a href="/project/{{user.projectid}}">{{user}}</a></strong>
+      {% endfor %}
+
+    </div>
+  </div>
+</body>
+<script>
+$('.inactive').on('mouseover', function() {
+  $(this).removeClass('inactive');
+//alert("");
+});
+</script>
+<script>
+$('.inactive').on('mouseout', function() {
+  var q = $( "#query" ).val();
+  if(q=='')
+    $(this).addClass('inactive');
+});
+</script>
+</html>
